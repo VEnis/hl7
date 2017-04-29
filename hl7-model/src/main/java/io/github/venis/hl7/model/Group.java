@@ -2,6 +2,7 @@ package io.github.venis.hl7.model;
 
 import ca.uhn.hl7v2.HL7Exception;
 import ca.uhn.hl7v2.util.SegmentFinder;
+import lombok.ToString;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 import static io.github.venis.hl7.model.Constants.DEFAULT_COMPONENT_SUB_COMPONENT_NUMBER;
 import static io.github.venis.hl7.model.Constants.DEFAULT_REPETITION_NUMBER;
 
+@ToString(of = "hapiGroup")
 public class Group implements Serializable {
     protected ca.uhn.hl7v2.model.Group hapiGroup;
     private transient SegmentFinder hapiSegmentFinder;
