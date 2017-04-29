@@ -1,0 +1,5 @@
+rootProject.name = 'hl7'
+
+include 'hl7-model'
+include 'hl7-receiver'
+include 'hl7-receiver-app'

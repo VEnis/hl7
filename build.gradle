@@ -1,0 +1,25 @@
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.5'
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    group = 'io.github.venis.hl7'
+
+    repositories {
+        jcenter()
+    }
+
+}
+
+allprojects {
+}
