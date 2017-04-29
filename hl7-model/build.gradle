@@ -1,0 +1,12 @@
+dependencies {
+    def hapiVersion = "2.2"
+    compileOnly "ca.uhn.hapi:hapi-base:${hapiVersion}"
+    compileOnly "ca.uhn.hapi:hapi-structures-v21:${hapiVersion}"
+    compileOnly "ca.uhn.hapi:hapi-structures-v22:${hapiVersion}"
+    compileOnly "ca.uhn.hapi:hapi-structures-v23:${hapiVersion}"
+    compileOnly "ca.uhn.hapi:hapi-structures-v231:${hapiVersion}"
+    compileOnly "ca.uhn.hapi:hapi-structures-v24:${hapiVersion}"
+    compileOnly "ca.uhn.hapi:hapi-structures-v25:${hapiVersion}"
+    compileOnly "ca.uhn.hapi:hapi-structures-v251:${hapiVersion}"
+    compileOnly "ca.uhn.hapi:hapi-structures-v26:${hapiVersion}"
+}
