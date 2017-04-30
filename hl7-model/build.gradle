@@ -1,4 +1,4 @@
-version = "0.0.1.BUILD-SNAPSHOT"
+version = "0.0.1"
 
 dependencies {
     def hapiVersion = "2.2"
