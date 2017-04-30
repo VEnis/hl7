@@ -21,6 +21,9 @@ allprojects {
 }
 
 subprojects {
+    ext {
+        hapiVersion = "2.2"
+    }
     apply plugin: 'java'
     apply plugin: 'groovy'
 
@@ -56,6 +59,15 @@ subprojects {
             property "sonar.projectKey", project.getRootProject().getGroup().toString() + ":" + project.getName()
             property "sonar.projectName", project.getRootProject().getGroup().toString() + ":" + project.getName()
         }
+    }
+
+    // Common hapi testing
+    test {
+        def hapiDir = file("${project.buildDir}/tmp/hapi")
+        doFirst {
+            hapiDir.mkdirs()
+        }
+        systemProperty "hapi.home", "${hapiDir.absolutePath}"
     }
 }
 
