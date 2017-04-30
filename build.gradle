@@ -19,6 +19,7 @@ group = 'io.github.venis.hl7'
 
 subprojects {
     apply plugin: 'java'
+    apply plugin: 'groovy'
     apply plugin: "org.sonarqube"
 
     group = 'io.github.venis.hl7'
@@ -30,6 +31,13 @@ subprojects {
     dependencies {
         compile "org.slf4j:slf4j-api:1.7.25"
         compileOnly "org.projectlombok:lombok:1.16.16"
+
+        testCompile 'org.spockframework:spock-core:1.1-groovy-2.4-rc-4'
+        testCompile('com.athaydes:spock-reports:1.3.0') {
+            transitive = false // this avoids affecting your version of Groovy/Spock
+        }
+        testCompile 'org.slf4j:slf4j-simple:1.7.25'
+
     }
 
     sonarqube {
