@@ -20,6 +20,7 @@ group = 'io.github.venis.hl7'
 subprojects {
     apply plugin: 'java'
     apply plugin: 'groovy'
+    apply plugin: "jacoco"
     apply plugin: "org.sonarqube"
 
     group = 'io.github.venis.hl7'
@@ -46,6 +47,24 @@ subprojects {
             property "sonar.projectName", project.getRootProject().getGroup().toString() + ":" + project.getName()
         }
     }
+    
+    jacoco {
+        toolVersion = "0.7.9"
+    }
+
+    jacocoTestReport {
+        reports {
+            xml.enabled false
+            csv.enabled false
+            html.enabled true
+            html.destination "${buildDir}/reports/jacoco"
+        }
+    }
+
+    task abc << {
+        println project.getProperties()
+    }
+
 }
 
 allprojects {
