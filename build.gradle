@@ -1,29 +1,136 @@
+plugins {
+    id "com.dorongold.task-tree" version "1.3"
+    id "org.sonarqube" version "2.3" apply false
+    id "com.jfrog.bintray" version "1.7" apply false
+}
+
 task wrapper(type: Wrapper) {
     gradleVersion = '3.5'
 }
 
-buildscript {
+allprojects {
     repositories {
         jcenter()
     }
+    group = 'io.github.venis.hl7'
 
-    dependencies {
+    // JACOCO
+    apply plugin: "jacoco"
+    jacoco {
+        toolVersion = "0.7.9"
     }
 }
 
 subprojects {
-    apply plugin: 'java'
-    group = 'io.github.venis.hl7'
-
-    repositories {
-        jcenter()
+    ext {
+        hapiVersion = "2.2"
     }
+    apply plugin: 'java'
+    apply plugin: 'groovy'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 
     dependencies {
+        compile "org.slf4j:slf4j-api:1.7.25"
         compileOnly "org.projectlombok:lombok:1.16.16"
+
+        testCompile 'org.spockframework:spock-core:1.1-groovy-2.4-rc-4'
+        testCompile('com.athaydes:spock-reports:1.3.0') {
+            transitive = false // this avoids affecting your version of Groovy/Spock
+        }
+        testCompile 'org.slf4j:slf4j-simple:1.7.25'
     }
 
+    // JACOCO
+    jacocoTestReport {
+        reports {
+            xml.enabled true
+            xml.destination "${buildDir}/reports/jacoco/report.xml"
+            csv.enabled false
+            html.enabled true
+            html.destination "${buildDir}/reports/jacoco/html"
+        }
+    }
+
+    // SONAR
+    apply plugin: "org.sonarqube"
+    sonarqube {
+        properties {
+            property "sonar.projectKey", project.getRootProject().getGroup().toString() + ":" + project.getName()
+            property "sonar.projectName", project.getRootProject().getGroup().toString() + ":" + project.getName()
+        }
+    }
+
+    // Common hapi testing
+    test {
+        def hapiDir = file("${project.buildDir}/tmp/hapi")
+        doFirst {
+            hapiDir.mkdirs()
+        }
+        systemProperty "hapi.home", "${hapiDir.absolutePath}"
+    }
+
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        classifier = 'javadoc'
+        from javadoc.destinationDir
+    }
+
+    artifacts {
+        archives jar
+        archives sourcesJar
+        archives javadocJar
+    }
+
+    // BINTRAY
+    apply plugin: "com.jfrog.bintray"
+
+    afterEvaluate { project ->
+        bintray {
+            user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
+            key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
+            configurations = ['archives']
+            dryRun = false
+            publish = true
+            override = false
+            pkg {
+                repo = 'io.github.venis.hl7'
+                name = project.getName()
+                userOrg = "vyacheslavenis"
+                licenses = ['MIT']
+                websiteUrl = 'https://github.com/VEnis/hl7'
+                issueTrackerUrl = 'https://github.com/VEnis/hl7/issues'
+                vcsUrl = 'https://github.com/VEnis/hl7.git'
+                version {
+                    name = "${project.version}"
+                    vcsTag = "hl7-model/${project.version}"
+                }
+            }
+        }
+    }
 }
 
-allprojects {
+// Gathering complete code coverage from all sub-projects. Will be used on CI after each module release
+task codeCoverageReport(type: JacocoReport) {
+    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+
+    subprojects.each {
+        sourceSets it.sourceSets.main
+    }
+
+    reports {
+        xml.enabled true
+        xml.destination "${buildDir}/reports/jacoco/report.xml"
+        html.enabled false
+        csv.enabled false
+    }
+}
+
+codeCoverageReport.dependsOn {
+    subprojects*.test
 }

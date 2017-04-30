@@ -3,6 +3,7 @@ package io.github.venis.hl7.model;
 import ca.uhn.hl7v2.HL7Exception;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import static io.github.venis.hl7.model.Constants.DEFAULT_COMPONENT_SUB_COMPONEN
 import static io.github.venis.hl7.model.Constants.DEFAULT_REPETITION_NUMBER;
 
 @RequiredArgsConstructor
+@Slf4j
 public class Segment implements Serializable {
     @NonNull
     private ca.uhn.hl7v2.model.Segment hapiSegment;
@@ -24,6 +26,7 @@ public class Segment implements Serializable {
                     .map(Field::new)
                     .collect(Collectors.toList());
         } catch (HL7Exception e) {
+            log.debug("No fields was found for given field number", e);
             return new ArrayList<>();
         }
     }
@@ -36,6 +39,7 @@ public class Segment implements Serializable {
         try {
             return new Field(hapiSegment.getField(fieldNumber, repetition));
         } catch (HL7Exception e) {
+            log.debug("Field with given number and repetition was not found", e);
             return null;
         }
     }
