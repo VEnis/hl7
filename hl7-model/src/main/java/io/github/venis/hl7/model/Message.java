@@ -41,7 +41,9 @@ public class Message extends Group implements Serializable {
 
     private static ca.uhn.hl7v2.model.Message createMessage(String type, String version, String processingId) {
         String[] messageTypeParts = type.split("_");
-        if (messageTypeParts.length != 2) throw new IllegalArgumentException("Passed hl7 type is invalid: " + type);
+        if (messageTypeParts.length != 2) {
+            throw new IllegalArgumentException("Passed hl7 type is invalid: " + type);
+        }
 
         DefaultModelClassFactory defaultModelClassFactory = new DefaultModelClassFactory();
 
