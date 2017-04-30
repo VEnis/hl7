@@ -1,4 +1,4 @@
-version = "0.0.1"
+version = "0.0.1.RELEASE"
 
 dependencies {
     compileOnly "ca.uhn.hapi:hapi-base:${project.hapiVersion}"
