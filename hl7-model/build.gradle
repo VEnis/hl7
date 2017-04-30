@@ -1,3 +1,5 @@
+version = "0.0.1.BUILD-SNAPSHOT"
+
 dependencies {
     def hapiVersion = "2.2"
     compileOnly "ca.uhn.hapi:hapi-base:${hapiVersion}"
