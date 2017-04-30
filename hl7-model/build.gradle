@@ -1,3 +1,5 @@
+version = "0.0.1.BUILD-SNAPSHOT"
+
 dependencies {
     def hapiVersion = "2.2"
     compileOnly "ca.uhn.hapi:hapi-base:${hapiVersion}"
@@ -9,4 +11,16 @@ dependencies {
     compileOnly "ca.uhn.hapi:hapi-structures-v25:${hapiVersion}"
     compileOnly "ca.uhn.hapi:hapi-structures-v251:${hapiVersion}"
     compileOnly "ca.uhn.hapi:hapi-structures-v26:${hapiVersion}"
+
+    testCompile "ca.uhn.hapi:hapi-base:${hapiVersion}"
+    testCompile "ca.uhn.hapi:hapi-structures-v21:${hapiVersion}"
+    testCompile "ca.uhn.hapi:hapi-structures-v22:${hapiVersion}"
+    testCompile "ca.uhn.hapi:hapi-structures-v23:${hapiVersion}"
+    testCompile "ca.uhn.hapi:hapi-structures-v231:${hapiVersion}"
+    testCompile "ca.uhn.hapi:hapi-structures-v24:${hapiVersion}"
+    testCompile "ca.uhn.hapi:hapi-structures-v25:${hapiVersion}"
+    testCompile "ca.uhn.hapi:hapi-structures-v251:${hapiVersion}"
+    testCompile "ca.uhn.hapi:hapi-structures-v26:${hapiVersion}"
+
+    testCompile "org.apache.commons:commons-lang3:3.5"
 }

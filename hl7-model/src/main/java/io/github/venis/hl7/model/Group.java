@@ -3,6 +3,7 @@ package io.github.venis.hl7.model;
 import ca.uhn.hl7v2.HL7Exception;
 import ca.uhn.hl7v2.util.SegmentFinder;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -16,6 +17,7 @@ import static io.github.venis.hl7.model.Constants.DEFAULT_COMPONENT_SUB_COMPONEN
 import static io.github.venis.hl7.model.Constants.DEFAULT_REPETITION_NUMBER;
 
 @ToString(of = "hapiGroup")
+@Slf4j
 public class Group implements Serializable {
     protected ca.uhn.hl7v2.model.Group hapiGroup;
     private transient SegmentFinder hapiSegmentFinder;
@@ -31,6 +33,7 @@ public class Group implements Serializable {
                     .map(e -> new Group((ca.uhn.hl7v2.model.Group) e))
                     .collect(Collectors.toList());
         } catch (HL7Exception e) {
+            log.debug("No groups was found for given group name", e);
             return new ArrayList<>();
         }
     }
@@ -43,6 +46,7 @@ public class Group implements Serializable {
         try {
             return new Group(hapiSegmentFinder.getGroup(groupName, repetition));
         } catch (HL7Exception e) {
+            log.debug("Group with given name and repetition was not found", e);
             return null;
         }
     }
@@ -53,6 +57,7 @@ public class Group implements Serializable {
                     .map(e -> new Segment((ca.uhn.hl7v2.model.Segment) e))
                     .collect(Collectors.toList());
         } catch (HL7Exception e) {
+            log.debug("No segments was found for given segment name", e);
             return new ArrayList<>();
         }
     }
@@ -91,6 +96,7 @@ public class Group implements Serializable {
         try {
             return new Segment(hapiSegmentFinder.getSegment(segmentName, repetition));
         } catch (HL7Exception e) {
+            log.debug("Segment with given name and repetition was not found", e);
             return null;
         }
     }
