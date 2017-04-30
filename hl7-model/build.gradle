@@ -21,4 +21,6 @@ dependencies {
     testCompile "ca.uhn.hapi:hapi-structures-v25:${hapiVersion}"
     testCompile "ca.uhn.hapi:hapi-structures-v251:${hapiVersion}"
     testCompile "ca.uhn.hapi:hapi-structures-v26:${hapiVersion}"
+
+    testCompile "org.apache.commons:commons-lang3:3.5"
 }
