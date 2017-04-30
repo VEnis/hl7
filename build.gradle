@@ -7,12 +7,25 @@ task wrapper(type: Wrapper) {
     gradleVersion = '3.5'
 }
 
-group = 'io.github.venis.hl7'
-subprojects {
+allprojects {
+    repositories {
+        jcenter()
+    }
     group = 'io.github.venis.hl7'
 
+    // JACOCO
+    apply plugin: "jacoco"
+    jacoco {
+        toolVersion = "0.7.9"
+    }
+}
+
+subprojects {
     apply plugin: 'java'
     apply plugin: 'groovy'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 
     dependencies {
         compile "org.slf4j:slf4j-api:1.7.25"
@@ -23,23 +36,19 @@ subprojects {
             transitive = false // this avoids affecting your version of Groovy/Spock
         }
         testCompile 'org.slf4j:slf4j-simple:1.7.25'
-
     }
 
     // JACOCO
-    apply plugin: "jacoco"
-    jacoco {
-        toolVersion = "0.7.9"
-    }
-
     jacocoTestReport {
         reports {
-            xml.enabled false
+            xml.enabled true
+            xml.destination "${buildDir}/reports/jacoco/report.xml"
             csv.enabled false
             html.enabled true
-            html.destination "${buildDir}/reports/jacoco"
+            html.destination "${buildDir}/reports/jacoco/html"
         }
     }
+
     // SONAR
     apply plugin: "org.sonarqube"
     sonarqube {
@@ -50,9 +59,22 @@ subprojects {
     }
 }
 
-allprojects {
-    repositories {
-        jcenter()
+// Gathering complete code coverage from all sub-projects. Will be used on CI after each module release
+task codeCoverageReport(type: JacocoReport) {
+    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+
+    subprojects.each {
+        sourceSets it.sourceSets.main
+    }
+
+    reports {
+        xml.enabled true
+        xml.destination "${buildDir}/reports/jacoco/report.xml"
+        html.enabled false
+        csv.enabled false
     }
 }
 
+codeCoverageReport.dependsOn {
+    subprojects*.test
+}
