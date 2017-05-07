@@ -140,6 +140,21 @@ subprojects {
         }
     }
 
+    // Findbugs
+    apply plugin: "findbugs"
+    findbugs {
+        toolVersion = "3.0.1"
+        ignoreFailures = true
+        effort = "max"
+        reportLevel = "low"
+    }
+    tasks.withType(FindBugs) {
+        reports {
+            xml.enabled false
+            html.enabled true
+        }
+    }
+
     // JDepend
     apply plugin: 'jdepend'
     jdepend {
