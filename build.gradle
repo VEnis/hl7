@@ -4,6 +4,7 @@ plugins {
     id "com.jfrog.bintray" version "1.7" apply false
     id "org.owasp.dependencycheck" version "1.4.5.1"
     id 'de.aaschmid.cpd' version '1.0' apply false
+    id 'org.jbake.site' version '1.0.0'
 }
 
 task wrapper(type: Wrapper) {
@@ -181,4 +182,10 @@ task codeCoverageReport(type: JacocoReport) {
 
 codeCoverageReport.dependsOn {
     subprojects*.test
+}
+
+// JBake
+jbake {
+    includeDefaultRepositories = false
+    srcDirName  = 'site'
 }
