@@ -139,6 +139,13 @@ subprojects {
             xml.enabled = false
         }
     }
+
+    // JDepend
+    apply plugin: 'jdepend'
+    jdepend {
+        ignoreFailures = true
+        toolVersion = '2.9.1'
+    }
 }
 
 // Gathering complete code coverage from all sub-projects. Will be used on CI after each module release
