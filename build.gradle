@@ -139,6 +139,21 @@ subprojects {
             xml.enabled = false
         }
     }
+
+    // Findbugs
+    apply plugin: "findbugs"
+    findbugs {
+        toolVersion = "3.0.1"
+        ignoreFailures = true
+        effort = "max"
+        reportLevel = "low"
+    }
+    tasks.withType(FindBugs) {
+        reports {
+            xml.enabled false
+            html.enabled true
+        }
+    }
 }
 
 // Gathering complete code coverage from all sub-projects. Will be used on CI after each module release
