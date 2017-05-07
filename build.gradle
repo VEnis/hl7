@@ -3,6 +3,7 @@ plugins {
     id "org.sonarqube" version "2.3" apply false
     id "com.jfrog.bintray" version "1.7" apply false
     id "org.owasp.dependencycheck" version "1.4.5.1"
+    id 'de.aaschmid.cpd' version '1.0' apply false
 }
 
 task wrapper(type: Wrapper) {
@@ -123,6 +124,20 @@ subprojects {
         ruleSets = ["java-basic", "java-braces", "java-codesize", "java-comments", "java-controversial", "java-coupling",
         "java-design", "java-empty", "java-imports", "java-naming", "java-optimizations", "java-strictexception",
         "java-strings", "java-sunsecure", "java-typeresolution", "java-unnecessary", "java-unusedcode"]
+    }
+
+    // CPD
+    apply plugin: 'de.aaschmid.cpd'
+    cpd {
+        language = 'java'
+        toolVersion = '5.6.1'
+        ignoreFailures = true
+    }
+    cpdCheck {
+        reports {
+            text.enabled = true
+            xml.enabled = false
+        }
     }
 }
 
