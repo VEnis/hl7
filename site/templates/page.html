@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="header.html::head"/>
+<body onload="prettyPrint()">
+<nav th:replace="menu.html::menu-top"/>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="menu.html::menu-left"/>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" th:utext='${content.body}'>
+        </div>
+    </div>
+</div>
+<div th:replace="footer.html::footer"></div>
+</body>
+</html>

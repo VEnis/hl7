@@ -1,0 +1,26 @@
+= Source Code Management
+:jbake-type: page
+:jbake-status: published
+:idprefix:
+
+== Overview
+
+This project uses GIT and GitHub to manage its source code.
+
+== Web Browser Access
+
+The following is a link to a browsable version of the source repository:
+
+https://github.com/VEnis/hl7
+
+== Anonymous Access
+
+The source can be checked out anonymously from Subversion with one of this commands:
+
+----
+git clone git@github.com:VEnis/hl7.git
+----
+
+----
+git clone https://github.com/VEnis/hl7.git
+----

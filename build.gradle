@@ -186,6 +186,13 @@ codeCoverageReport.dependsOn {
 
 // JBake
 jbake {
+    version  = '2.5.1'
     includeDefaultRepositories = false
     srcDirName  = 'site'
+    freemarkerVersion = '2.3.26-incubating'
+    groovyTemplatesVersion = '2.4.11'
+    jade4jVersion = '1.2.5'
+    thymeleafVersion = '3.0.6.RELEASE'
+    asciidoctorJavaIntegrationVersion = '0.1.4'
+    asciidoctorjVersion = '1.5.5'
 }
