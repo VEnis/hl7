@@ -101,6 +101,9 @@ Temporary Items
 */build/
 build/
 
+generated_src
+generated_testSrc
+
 # Ignore Gradle GUI config
 gradle-app.setting
 
