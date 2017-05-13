@@ -3,6 +3,9 @@
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8" inherit-compiler-output="false">
     <output-test url="file://$MODULE_DIR$/../../../hl7-connection/build/classes/test" />
     <exclude-output />
+    <content url="file://$MODULE_DIR$/../../../hl7-connection/generated_testSrc">
+      <sourceFolder url="file://$MODULE_DIR$/../../../hl7-connection/generated_testSrc" isTestSource="true" generated="true" />
+    </content>
     <content url="file://$MODULE_DIR$/../../../hl7-connection/src/test">
       <sourceFolder url="file://$MODULE_DIR$/../../../hl7-connection/src/test/groovy" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../../hl7-connection/src/test/java" isTestSource="true" />
@@ -18,6 +21,7 @@
     <orderEntry type="library" name="Gradle: org.codehaus.groovy:groovy-all:2.4.9" level="project" />
     <orderEntry type="library" name="Gradle: junit:junit:4.12" level="project" />
     <orderEntry type="library" name="Gradle: org.hamcrest:hamcrest-core:1.3" level="project" />
+    <orderEntry type="library" name="Gradle: org.inferred:freebuilder:1.14.1" level="project" />
   </component>
   <component name="TestModuleProperties" production-module="hl7-connection_main" />
 </module>
