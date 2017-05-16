@@ -6,13 +6,9 @@ import org.inferred.freebuilder.FreeBuilder;
 
 @FreeBuilder
 public interface DualPortMllp extends Base {
-    String host();
-
     int inboundPort();
 
     int outboundPort();
-
-    Builder toBuilder();
 
     @Override
     default HL7Service createServer(HapiContext hapiContext) {
@@ -20,8 +16,5 @@ public interface DualPortMllp extends Base {
     }
 
     class Builder extends DualPortMllp_Builder {
-        public Builder() {
-            host("0.0.0.0");
-        }
     }
 }

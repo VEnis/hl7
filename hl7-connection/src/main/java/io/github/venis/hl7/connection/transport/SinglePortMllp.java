@@ -7,11 +7,7 @@ import org.inferred.freebuilder.FreeBuilder;
 @FreeBuilder
 public interface SinglePortMllp extends Base {
 
-    String host();
-
     int port();
-
-    Builder toBuilder();
 
     @Override
     default HL7Service createServer(HapiContext hapiContext) {
@@ -19,8 +15,5 @@ public interface SinglePortMllp extends Base {
     }
 
     class Builder extends SinglePortMllp_Builder {
-        public Builder() {
-            host("0.0.0.0");
-        }
     }
 }
