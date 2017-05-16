@@ -14,11 +14,11 @@ public abstract class IncomingConnection extends AbstractConnection {
 
     private HL7Service service;
 
-    abstract Builder toBuilder();
+    public abstract Builder toBuilder();
 
-    abstract Map<AppRoutingDataImpl, ReceivingApplication> applications();
+    public abstract Map<AppRoutingDataImpl, ReceivingApplication> applications();
 
-    abstract List<ConnectionListener> connectionListeners();
+    public abstract List<ConnectionListener> connectionListeners();
 
     @Override
     public void start() {
