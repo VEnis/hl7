@@ -22,9 +22,11 @@ public abstract class AbstractConnection {
 
     public abstract void start();
 
-    public abstract void startAndWait() throws InterruptedException;
+    public abstract void startAndWait();
 
     public abstract void stop();
+
+    public abstract boolean isRunning();
 
     HapiContext initHapiContext() {
         HapiContext hapiContext = new DefaultHapiContext(new NoValidationBuilder());

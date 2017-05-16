@@ -12,7 +12,7 @@ import java.util.Map;
 @FreeBuilder
 public abstract class IncomingConnection extends AbstractConnection {
 
-    private HL7Service hl7Service;
+    private HL7Service service;
 
     abstract Builder toBuilder();
 
@@ -22,31 +22,46 @@ public abstract class IncomingConnection extends AbstractConnection {
 
     @Override
     public void start() {
-        hl7Service.start();
+        if (null != service) {
+            throw new IllegalStateException("Connection already started");
+        }
+        service = initService();
+        service.start();
     }
 
     @Override
-    public void startAndWait() throws InterruptedException {
-        hl7Service.startAndWait();
+    public void startAndWait() {
+        if (null != service) {
+            throw new IllegalStateException("Connection already started");
+        }
+        service = initService();
+        try {
+            service.startAndWait();
+        } catch (InterruptedException ignored) {
+        }
     }
 
     @Override
     public void stop() {
-        hl7Service.stop();
+        if (null == service) {
+            throw new IllegalStateException("Connection is not started");
+        }
+        service.stop();
+        service = null;
     }
 
-    private void initHl7Service() {
-        hl7Service = transport().createServer(initHapiContext());
-        connectionListeners().forEach(e -> hl7Service.registerConnectionListener(e));
-        applications().forEach((routing, handler) -> hl7Service.registerApplication(routing, handler));
+    @Override
+    public boolean isRunning() {
+        return null != service;
+    }
+
+    private HL7Service initService() {
+        HL7Service service = transport().createServer(initHapiContext());
+        connectionListeners().forEach(service::registerConnectionListener);
+        applications().forEach(service::registerApplication);
+        return service;
     }
 
     public static class Builder extends IncomingConnection_Builder {
-        @Override
-        public IncomingConnection build() {
-            IncomingConnection connection = super.build();
-            connection.initHl7Service();
-            return connection;
-        }
     }
 }
