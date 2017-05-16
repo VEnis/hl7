@@ -38,6 +38,7 @@ public abstract class IncomingConnection extends AbstractConnection {
         try {
             service.startAndWait();
         } catch (InterruptedException ignored) {
+            Thread.currentThread().interrupt();
         }
     }
 
