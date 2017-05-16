@@ -57,10 +57,10 @@ public abstract class IncomingConnection extends AbstractConnection {
     }
 
     private HL7Service initService() {
-        HL7Service service = transport().createServer(initHapiContext());
-        connectionListeners().forEach(service::registerConnectionListener);
-        applications().forEach(service::registerApplication);
-        return service;
+        HL7Service hl7Service = transport().createServer(initHapiContext());
+        connectionListeners().forEach(hl7Service::registerConnectionListener);
+        applications().forEach(hl7Service::registerApplication);
+        return hl7Service;
     }
 
     public static class Builder extends IncomingConnection_Builder {
