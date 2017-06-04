@@ -3,6 +3,9 @@
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
     <output url="file://$MODULE_DIR$/../../../hl7-model/build/classes/main" />
     <exclude-output />
+    <content url="file://$MODULE_DIR$/../../../hl7-model/generated_src">
+      <sourceFolder url="file://$MODULE_DIR$/../../../hl7-model/generated_src" isTestSource="false" generated="true" />
+    </content>
     <content url="file://$MODULE_DIR$/../../../hl7-model/src/main">
       <sourceFolder url="file://$MODULE_DIR$/../../../hl7-model/src/main/groovy" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../../hl7-model/src/main/java" isTestSource="false" />
@@ -11,15 +14,16 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.25" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Gradle: ca.uhn.hapi:hapi-structures-v24:2.2" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Gradle: ca.uhn.hapi:hapi-structures-v21:2.2" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Gradle: ca.uhn.hapi:hapi-structures-v251:2.2" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Gradle: ca.uhn.hapi:hapi-structures-v231:2.2" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Gradle: ca.uhn.hapi:hapi-structures-v26:2.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.inferred:freebuilder:1.14.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: ca.uhn.hapi:hapi-base:2.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: ca.uhn.hapi:hapi-structures-v25:2.2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: ca.uhn.hapi:hapi-structures-v251:2.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: ca.uhn.hapi:hapi-structures-v22:2.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: ca.uhn.hapi:hapi-structures-v23:2.2" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Gradle: ca.uhn.hapi:hapi-base:2.2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: ca.uhn.hapi:hapi-structures-v24:2.2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: ca.uhn.hapi:hapi-structures-v231:2.2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: ca.uhn.hapi:hapi-structures-v21:2.2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: ca.uhn.hapi:hapi-structures-v26:2.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: org.projectlombok:lombok:1.16.16" level="project" />
   </component>
 </module>

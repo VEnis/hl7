@@ -1,0 +1,5 @@
+version = "0.0.1.BUILD-SNAPSHOT"
+
+dependencies {
+    compile "ca.uhn.hapi:hapi-base:${project.hapiVersion}"
+}
