@@ -1,0 +1,26 @@
+allprojects {
+    task dependencyReportGradlePre() {
+        doLast {
+            new File("${buildDir}/reports/dependencies/").mkdirs();
+        }
+    }
+
+    task dependencyReportGradle(type: DependencyReportTask, dependsOn: dependencyReportGradlePre) {
+        projects = [project]
+        outputFile = new File("${buildDir}/reports/dependencies/index.txt");
+    }
+
+    task dependencyReportTransform(dependsOn: dependencyReportGradle)  {
+        doLast {
+            transformTxtToHtml(rootDir.absolutePath, "${buildDir}/reports/dependencies/index.txt", "${buildDir}/reports/dependencies/index.html")
+        }
+    }
+
+    afterEvaluate {
+        try {
+            check.dependsOn dependencyReportTransform
+        } catch (Exception ex) {
+            System.out.println(project.name + ": " + ex.getMessage())
+        }
+    }
+}

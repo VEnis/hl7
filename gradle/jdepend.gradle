@@ -1,0 +1,25 @@
+allprojects {
+    apply plugin: 'jdepend'
+    jdepend {
+        ignoreFailures = true
+        toolVersion = '2.9.1'
+    }
+
+    configurations.all {
+        resolutionStrategy {
+            force('jdepend:jdepend:2.9.1')
+        }
+    }
+
+    task jdependReport(group: 'verification', description: 'Generates a HTML report after executing jdepend checks.') {
+        doLast {
+            //check for 'parent' projects
+            if (new File("$reporting.baseDir/jdepend/main.xml").exists()) {
+                ant.xslt(
+                        in: "$reporting.baseDir/jdepend/main.xml",
+                        style: "$rootDir/config/jdepend/jdepend-report.xslt",
+                        out: "$reporting.baseDir/jdepend/main.html")
+            }
+        }
+    }
+}

@@ -1,0 +1,22 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath 'org.owasp:dependency-check-gradle:1.4.5.1'
+    }
+}
+
+allprojects {
+    apply plugin: org.owasp.dependencycheck.gradle.DependencyCheck
+    dependencyCheck {
+        autoUpdate=true
+        //cveValidForHours=24
+        skipConfigurations = ['findbugs','checkstyle','umljavadoc']
+        format='ALL'
+        outputDirectory = buildDir.absolutePath + "/reports/owasp/"
+    }
+}
