@@ -68,4 +68,5 @@ task updateChangelog(dependsOn: ['generateChangelog']) {
     }
 }
 
-tasks.release.dependsOn subprojects*.clean, subprojects*.build, subprojects*.bintrayUpload, updateChangelog
+tasks.release.dependsOn subprojects*.clean, subprojects*.build, subprojects*.bintrayUpload
+tasks.release.finalizedBy updateChangelog
