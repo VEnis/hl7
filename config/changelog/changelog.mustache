@@ -1,0 +1,23 @@
+# VEnis HL7
+
+{{#tags}}
+## [{{name}}]{{#hasTagTime}} - {{tagTime}}{{/hasTagTime}}
+    {{#issues}}
+        {{#hasIssue}}
+            {{#hasLink}}
+### {{name}} [{{issue}}]({{link}}) {{title}} {{#hasIssueType}} *{{issueType}}* {{/hasIssueType}} {{#hasLabels}} {{#labels}} *{{.}}* {{/labels}} {{/hasLabels}}
+            {{/hasLink}}
+            {{^hasLink}}
+### {{name}} {{issue}} {{title}} {{#hasIssueType}} *{{issueType}}* {{/hasIssueType}} {{#hasLabels}} {{#labels}} *{{.}}* {{/labels}} {{/hasLabels}}
+            {{/hasLink}}
+        {{/hasIssue}}
+        {{^hasIssue}}
+### {{name}}
+        {{/hasIssue}}
+
+        {{#commits}}
+* [{{{messageTitle}}}](https://github.com/venis/hl7/commit/{{hash}}) ({{authorName}})
+        {{/commits}}
+
+    {{/issues}}
+{{/tags}}

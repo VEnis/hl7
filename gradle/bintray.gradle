@@ -28,6 +28,8 @@ subprojects {
                 websiteUrl = 'https://github.com/VEnis/hl7'
                 issueTrackerUrl = 'https://github.com/VEnis/hl7/issues'
                 vcsUrl = 'https://github.com/VEnis/hl7.git'
+                githubRepo = 'VEnis/hl7'
+                githubReleaseNotesFile = 'CHANGELOG.md'
                 version {
                     name = "${project.version}"
                     vcsTag = "v${project.version}"

@@ -59,4 +59,13 @@ allprojects {
         }
     }
 }
-tasks.release.dependsOn subprojects*.clean, subprojects*.build, subprojects*.bintrayUpload
+
+task updateChangelog(dependsOn: ['generateChangelog']) {
+    description = 'Generates and commits CHANGELOG.md file'
+    doLast {
+        grgit.add(patterns: ['CHANGELOG.md'])
+        grgit.commit(message: 'Updated CHANGELOG.md', paths: ['CHANGELOG.md'])
+    }
+}
+
+tasks.release.dependsOn subprojects*.clean, subprojects*.build, subprojects*.bintrayUpload, updateChangelog
