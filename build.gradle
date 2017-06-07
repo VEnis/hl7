@@ -51,7 +51,9 @@ apply from: "${rootDir}/gradle/dependency.gradle"
 apply from: "${rootDir}/gradle/cpd.gradle"
 apply from: "${rootDir}/gradle/jacoco.gradle"
 apply from: "${rootDir}/gradle/owasp.gradle"
+apply from: "${rootDir}/gradle/bintray.gradle"
 apply from: "${rootDir}/gradle/release.gradle"
+apply from: "${rootDir}/gradle/taskorder.gradle"
 task wrapper(type: Wrapper) {
     gradleVersion = '3.5'
 }
