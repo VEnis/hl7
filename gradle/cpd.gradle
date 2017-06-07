@@ -10,7 +10,7 @@ buildscript {
     }
 }
 
-allprojects {
+subprojects {
     apply plugin: de.aaschmid.gradle.plugins.cpd.CpdPlugin
     cpd {
         language = 'java'
