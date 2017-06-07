@@ -1,6 +1,6 @@
 # VEnis HL7
 
-## [Unreleased]
+## [v0.0.2] - 2017-06-07
 ### GitHub [#12](https://github.com/VEnis/hl7/issues/12) Integrate changelog generation    *enhancement*  
 
 * [Close #12](https://github.com/venis/hl7/commit/c02063d38333947) (Vyacheslav Enis)
@@ -8,6 +8,7 @@
 
 ### No issue
 
+* [Updated CHANGELOG.md](https://github.com/venis/hl7/commit/f075e1182658f1b) (Vyacheslav Enis)
 * [Updated CHANGELOG.md](https://github.com/venis/hl7/commit/ab42f9ab7b9bddf) (Vyacheslav Enis)
 * [Renamed changelog task](https://github.com/venis/hl7/commit/337a9107b937087) (Vyacheslav Enis)
 * [Ignored okhttp cache](https://github.com/venis/hl7/commit/29f9535a7540822) (Vyacheslav Enis)
