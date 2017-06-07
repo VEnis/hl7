@@ -1,0 +1,47 @@
+allprojects {
+    apply plugin: "jacoco"
+    jacoco {
+        toolVersion = "0.7.9"
+    }
+}
+
+subprojects {
+    jacocoTestReport {
+        reports {
+            xml.enabled true
+            xml.destination "${buildDir}/reports/jacoco/report.xml"
+            csv.enabled false
+            html.enabled true
+            html.destination "${buildDir}/reports/jacoco/html"
+        }
+    }
+
+    afterEvaluate {
+        try {
+            check.dependsOn jacocoTestReport
+        } catch (Exception ex) {
+            System.out.println(project.name + ": " + ex.getMessage())
+        }
+    }
+}
+
+task jacocoTestReportMain(type: JacocoReport) {
+    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+
+    subprojects.each {
+        sourceSets it.sourceSets.main
+    }
+
+    reports {
+        xml.enabled true
+        xml.destination "${buildDir}/reports/jacoco/report.xml"
+        csv.enabled false
+        html.enabled true
+        html.destination "${buildDir}/reports/jacoco/html"
+    }
+}
+
+jacocoTestReportMain.dependsOn {
+    subprojects*.test
+}
+check.dependsOn jacocoTestReportMain

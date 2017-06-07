@@ -1,0 +1,62 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "org.ajoberstar:gradle-git:1.7.1"
+    }
+}
+
+import org.ajoberstar.gradle.git.release.opinion.Strategies
+import org.ajoberstar.gradle.git.release.semver.RebuildVersionStrategy
+import org.ajoberstar.grgit.Grgit
+import org.ajoberstar.grgit.exception.GrgitException
+
+static boolean tagExists(Grgit grgit, String revStr) {
+    try {
+        grgit.resolve.toCommit(revStr)
+        return true
+    } catch (GrgitException e) {
+        return false
+    }
+}
+
+allprojects {
+    apply plugin: org.ajoberstar.gradle.git.base.GrgitPlugin
+    apply plugin: org.ajoberstar.gradle.git.release.base.BaseReleasePlugin
+
+    release {
+        versionStrategy RebuildVersionStrategy.INSTANCE
+        versionStrategy Strategies.DEVELOPMENT
+        versionStrategy Strategies.PRE_RELEASE
+        versionStrategy Strategies.FINAL
+        defaultVersionStrategy = Strategies.DEVELOPMENT
+
+        tagStrategy {
+            generateMessage = { version ->
+                StringBuilder builder = new StringBuilder()
+                builder << 'Release of '
+                builder << version.version
+                builder << '\n\n'
+
+                String previousVersion = "${project.release.tagStrategy.toTagString(version.previousVersion)}^{commit}"
+                List excludes = []
+                if (tagExists(grgit, previousVersion)) {
+                    excludes << previousVersion
+                }
+                grgit.log(
+                        includes: ['HEAD'],
+                        excludes: excludes
+                ).inject(builder) { bldr, commit ->
+                    bldr << '- '
+                    bldr << commit.shortMessage
+                    bldr << '\n'
+                }
+                builder.toString()
+            }
+        }
+    }
+}
+tasks.release.dependsOn subprojects*.clean, subprojects*.build, subprojects*.bintrayUpload

@@ -1,0 +1,15 @@
+// All clean tasks must run first
+// all publish tasks must run after build
+allprojects.forEach { project ->
+    def clean = project.tasks.getByName(BasePlugin.CLEAN_TASK_NAME)
+    def build = project.tasks.getByName(BasePlugin.BUILD_GROUP)
+
+    project.tasks.forEach { task ->
+        if (task != clean) {
+            task.shouldRunAfter(clean)
+        }
+        if (task.group == PublishingPlugin.PUBLISH_TASK_GROUP) {
+            task.shouldRunAfter(build)
+        }
+    }
+}

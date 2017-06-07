@@ -1,0 +1,9 @@
+allprojects {
+    apply plugin: 'pmd'
+    pmd {
+        ignoreFailures = true
+        toolVersion = "5.7.0"
+        ruleSetFiles = files("${project.rootDir}/config/pmd/pmd-ruleset.xml")
+        ruleSets = []
+    }
+}

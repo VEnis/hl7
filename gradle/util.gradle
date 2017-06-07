@@ -1,0 +1,39 @@
+import org.apache.commons.lang3.StringEscapeUtils
+
+import java.nio.charset.Charset
+import java.nio.file.Files
+import java.nio.file.Paths
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'org.apache.commons:commons-lang3:3.5'
+    }
+}
+
+static String readFile(String path, Charset encoding)
+        throws IOException {
+    byte[] encoded = Files.readAllBytes(Paths.get(path))
+    return new String(encoded, encoding)
+}
+
+static void transformTxtToHtml(String path, String sourcePath, String targetPath) {
+    String contents = readFile(sourcePath, Charset.defaultCharset())
+    contents = contents.replace(path, ".")
+
+    //inject into template
+    String template = '<html><body>${body}</body></html>'
+    contents = template.replace('${body}', "<pre>" + StringEscapeUtils.escapeHtml4(contents) + "</pre>")
+
+    //save it
+    PrintWriter out = new PrintWriter(targetPath)
+    out.println(contents)
+    out.close()
+}
+
+ext {
+    readFile = this.&readFile
+    transformTxtToHtml = this.&transformTxtToHtml
+}

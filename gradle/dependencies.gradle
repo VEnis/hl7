@@ -1,0 +1,42 @@
+ext {
+    versions = [
+            slf4j       : '1.7.25',
+            lombok      : '1.16.16',
+            spockCore   : '1.1-groovy-2.4-rc-4',
+            spockReports: '1.3.0',
+            freebuilder : '1.14.1',
+            hapi        : '2.2',
+            commonsLang3: '3.5',
+            groovy      : '2.4.9'
+    ]
+    libs = [
+            slf4jApi         : "org.slf4j:slf4j-api:${versions.slf4j}",
+            slf4jSimple      : "org.slf4j:slf4j-simple:${versions.slf4j}",
+            lombok           : "org.projectlombok:lombok:${versions.lombok}",
+            spockCore        : "org.spockframework:spock-core:${versions.spockCore}",
+            spockReports     : "com.athaydes:spock-reports:${versions.spockReports}",
+            freebuilder      : "org.inferred:freebuilder:${versions.freebuilder}",
+            hapiBase         : "ca.uhn.hapi:hapi-base:${versions.hapi}",
+            hapiStructures21 : "ca.uhn.hapi:hapi-structures-v21:${versions.hapi}",
+            hapiStructures22 : "ca.uhn.hapi:hapi-structures-v22:${versions.hapi}",
+            hapiStructures23 : "ca.uhn.hapi:hapi-structures-v23:${versions.hapi}",
+            hapiStructures231: "ca.uhn.hapi:hapi-structures-v231:${versions.hapi}",
+            hapiStructures24 : "ca.uhn.hapi:hapi-structures-v24:${versions.hapi}",
+            hapiStructures25 : "ca.uhn.hapi:hapi-structures-v25:${versions.hapi}",
+            hapiStructures251: "ca.uhn.hapi:hapi-structures-v251:${versions.hapi}",
+            hapiStructures26 : "ca.uhn.hapi:hapi-structures-v26:${versions.hapi}",
+            hapiAll          : [
+                    "ca.uhn.hapi:hapi-base:${versions.hapi}",
+                    "ca.uhn.hapi:hapi-structures-v21:${versions.hapi}",
+                    "ca.uhn.hapi:hapi-structures-v22:${versions.hapi}",
+                    "ca.uhn.hapi:hapi-structures-v23:${versions.hapi}",
+                    "ca.uhn.hapi:hapi-structures-v231:${versions.hapi}",
+                    "ca.uhn.hapi:hapi-structures-v24:${versions.hapi}",
+                    "ca.uhn.hapi:hapi-structures-v25:${versions.hapi}",
+                    "ca.uhn.hapi:hapi-structures-v251:${versions.hapi}",
+                    "ca.uhn.hapi:hapi-structures-v26:${versions.hapi}"
+            ],
+            commonsLang3     : "org.apache.commons:commons-lang3:${versions.commonsLang3}",
+            groovy           : "org.codehaus.groovy:groovy-all:${versions.groovy}"
+    ]
+}

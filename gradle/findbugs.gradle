@@ -1,0 +1,15 @@
+allprojects {
+    apply plugin: "findbugs"
+    findbugs {
+        ignoreFailures = true
+        toolVersion = "3.0.1"
+        effort = "max"
+        reportLevel = "low"
+    }
+    tasks.withType(FindBugs) {
+        reports {
+            html.enabled true
+            xml.enabled false
+        }
+    }
+}
