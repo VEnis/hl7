@@ -1,5 +1,19 @@
 # VEnis HL7
 
+## [Unreleased]
+### GitHub [#12](https://github.com/VEnis/hl7/issues/12) Integrate changelog generation    *enhancement*  
+
+* [Close #12](https://github.com/venis/hl7/commit/c02063d38333947) (Vyacheslav Enis)
+* [#12 Initial changelog generation](https://github.com/venis/hl7/commit/00549c4855ce744) (Vyacheslav Enis)
+
+### No issue
+
+* [Updated CHANGELOG.md](https://github.com/venis/hl7/commit/ab42f9ab7b9bddf) (Vyacheslav Enis)
+* [Renamed changelog task](https://github.com/venis/hl7/commit/337a9107b937087) (Vyacheslav Enis)
+* [Ignored okhttp cache](https://github.com/venis/hl7/commit/29f9535a7540822) (Vyacheslav Enis)
+* [Updated bintray config (added release notes)](https://github.com/venis/hl7/commit/2fde5cac9d92473) (Vyacheslav Enis)
+* [Updated changelog generation config](https://github.com/venis/hl7/commit/330105ca6fd8ade) (Vyacheslav Enis)
+
 ## [v0.0.1] - 2017-06-07
 ### GitHub [#2](https://github.com/VEnis/hl7/issues/2) Integrade CPD checks    *quality*  
 
