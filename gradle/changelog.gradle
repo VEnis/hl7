@@ -11,7 +11,7 @@ buildscript {
 
 apply plugin: se.bjurr.gitchangelog.plugin.gradle.GitChangelogGradlePlugin
 
-task generateChangelog(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask) {
+task generateChangelog(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask, dependsOn: subprojects.build) {
     filePath = "CHANGELOG.md"
     templateContent = file("${project.rootDir}/config/changelog/changelog.mustache").getText('UTF-8')
     dateFormat = "yyyy-MM-dd"
