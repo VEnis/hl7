@@ -1,0 +1,24 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.5"
+    }
+}
+
+subprojects {
+    apply plugin: org.sonarqube.gradle.SonarQubePlugin
+
+    sonarqube {
+        properties {
+            property "sonar.projectKey", project.getRootProject().getGroup().toString() + ":" + project.getName()
+            property "sonar.projectName", project.getRootProject().getGroup().toString() + ":" + project.getName()
+            property "sonar.host.url", "https://sonarcloud.io"
+            property "sonar.organization", "venis-github"
+            property "sonar.login", project.hasProperty('sonar.login') ? project.property('sonar.login') : System.getenv('SONAR_LOGIN')
+        }
+    }
+}
