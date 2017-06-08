@@ -1,6 +1,6 @@
 # VEnis HL7
 
-## [v0.0.2] - 2017-06-07
+## [v0.0.3] - 2017-06-07
 ### GitHub [#12](https://github.com/VEnis/hl7/issues/12) Integrate changelog generation    *enhancement*  
 
 * [Close #12](https://github.com/venis/hl7/commit/c02063d38333947) (Vyacheslav Enis)
@@ -8,12 +8,18 @@
 
 ### No issue
 
-* [Updated CHANGELOG.md](https://github.com/venis/hl7/commit/f075e1182658f1b) (Vyacheslav Enis)
+* [Fixed release process (changelog generation)](https://github.com/venis/hl7/commit/d9e1c5da8f70b3e) (Vyacheslav Enis)
+* [Updated changelog](https://github.com/venis/hl7/commit/cc78877537350ea) (Vyacheslav Enis)
 * [Updated CHANGELOG.md](https://github.com/venis/hl7/commit/ab42f9ab7b9bddf) (Vyacheslav Enis)
 * [Renamed changelog task](https://github.com/venis/hl7/commit/337a9107b937087) (Vyacheslav Enis)
 * [Ignored okhttp cache](https://github.com/venis/hl7/commit/29f9535a7540822) (Vyacheslav Enis)
 * [Updated bintray config (added release notes)](https://github.com/venis/hl7/commit/2fde5cac9d92473) (Vyacheslav Enis)
 * [Updated changelog generation config](https://github.com/venis/hl7/commit/330105ca6fd8ade) (Vyacheslav Enis)
+
+## [v0.0.2] - 2017-06-07
+### No issue
+
+* [Updated CHANGELOG.md](https://github.com/venis/hl7/commit/f075e1182658f1b) (Vyacheslav Enis)
 
 ## [v0.0.1] - 2017-06-07
 ### GitHub [#2](https://github.com/VEnis/hl7/issues/2) Integrade CPD checks    *quality*  
