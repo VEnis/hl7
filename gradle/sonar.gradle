@@ -21,4 +21,6 @@ subprojects {
             property "sonar.login", project.hasProperty('sonar.login') ? project.property('sonar.login') : System.getenv('SONAR_LOGIN')
         }
     }
+
+    project.tasks.check.dependsOn "sonarqube"
 }
