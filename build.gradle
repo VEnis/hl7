@@ -54,6 +54,7 @@ apply from: "${rootDir}/gradle/owasp.gradle"
 apply from: "${rootDir}/gradle/sonar.gradle"
 apply from: "${rootDir}/gradle/bintray.gradle"
 apply from: "${rootDir}/gradle/changelog.gradle"
+apply from: "${rootDir}/gradle/license.gradle"
 apply from: "${rootDir}/gradle/release.gradle"
 apply from: "${rootDir}/gradle/taskorder.gradle"
 task wrapper(type: Wrapper) {
