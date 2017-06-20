@@ -36,7 +36,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 
-@ToString(callSuper = true, exclude = {"terserMessage"})
+@ToString(exclude = {"terserMessage"}, callSuper = true)
 @Slf4j
 public class Message extends Group implements Serializable {
     private transient Terser terserMessage;
