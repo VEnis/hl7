@@ -15,6 +15,11 @@ subprojects {
     license {
         header rootProject.file("${project.rootDir}/LICENSE")
         exclude "**/*.properties"
+
+        mapping {
+            java = 'SLASHSTAR_STYLE'
+            groovy = 'SLASHSTAR_STYLE'
+        }
     }
 
     project.tasks.check.dependsOn "downloadLicenses", "licenseMain", "licenseTest"
