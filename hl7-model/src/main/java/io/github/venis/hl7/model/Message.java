@@ -39,6 +39,7 @@ import java.io.Serializable;
 @ToString(exclude = {"terserMessage"}, callSuper = true)
 @Slf4j
 public class Message extends Group implements Serializable {
+    private static final int CREATE_MESSAGE_TYPE_EXPECTED_PARTS_COUNT = 2;
     private transient Terser terserMessage;
 
     public Message(ca.uhn.hl7v2.model.Message hapiMessage) {
@@ -64,7 +65,7 @@ public class Message extends Group implements Serializable {
 
     private static ca.uhn.hl7v2.model.Message createMessage(String type, String version, String processingId) {
         String[] messageTypeParts = type.split("_");
-        if (messageTypeParts.length != 2) {
+        if (messageTypeParts.length != CREATE_MESSAGE_TYPE_EXPECTED_PARTS_COUNT) {
             throw new IllegalArgumentException("Passed hl7 type is invalid: " + type);
         }
 
