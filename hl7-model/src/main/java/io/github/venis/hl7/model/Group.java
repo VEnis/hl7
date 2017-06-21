@@ -42,6 +42,7 @@ import static io.github.venis.hl7.model.Constants.DEFAULT_REPETITION_NUMBER;
 @ToString(of = "hapiGroup")
 @Slf4j
 public class Group implements Serializable {
+    private static final long serialVersionUID = 7858744287265892350L;
     protected ca.uhn.hl7v2.model.Group hapiGroup;
     private transient SegmentFinder hapiSegmentFinder;
 

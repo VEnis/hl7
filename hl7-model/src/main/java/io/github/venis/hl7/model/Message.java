@@ -40,6 +40,7 @@ import java.io.Serializable;
 @Slf4j
 public class Message extends Group implements Serializable {
     private static final int CREATE_MESSAGE_TYPE_EXPECTED_PARTS_COUNT = 2;
+    private static final long serialVersionUID = -127057638264163059L;
     private transient Terser terserMessage;
 
     public Message(ca.uhn.hl7v2.model.Message hapiMessage) {

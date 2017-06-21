@@ -35,6 +35,7 @@ import static io.github.venis.hl7.model.Constants.DEFAULT_COMPONENT_SUB_COMPONEN
 
 @RequiredArgsConstructor
 public class Field implements Serializable {
+    private static final long serialVersionUID = -6247885277540978188L;
     @NonNull
     private Type hapiType;
 

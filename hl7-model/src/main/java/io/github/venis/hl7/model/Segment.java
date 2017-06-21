@@ -40,6 +40,7 @@ import static io.github.venis.hl7.model.Constants.DEFAULT_REPETITION_NUMBER;
 @RequiredArgsConstructor
 @Slf4j
 public class Segment implements Serializable {
+    private static final long serialVersionUID = 4225314827658228610L;
     @NonNull
     private ca.uhn.hl7v2.model.Segment hapiSegment;
 
