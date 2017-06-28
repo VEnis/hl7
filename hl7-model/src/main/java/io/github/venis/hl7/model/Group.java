@@ -39,84 +39,193 @@ import java.util.stream.Collectors;
 import static io.github.venis.hl7.model.Constants.DEFAULT_COMPONENT_SUB_COMPONENT_NUMBER;
 import static io.github.venis.hl7.model.Constants.DEFAULT_REPETITION_NUMBER;
 
+/**
+ * Class that represent single hl7 group of segments (wraps hapi group)
+ *
+ * @see ca.uhn.hl7v2.model.Group
+ */
 @ToString(of = "hapiGroup")
 @Slf4j
+@SuppressWarnings("PMD.OnlyOneReturn")
 public class Group implements Serializable {
     private static final long serialVersionUID = 7858744287265892350L;
+
+    /**
+     * Hapi group to wrap
+     */
     protected ca.uhn.hl7v2.model.Group hapiGroup;
+
+    /**
+     * Segment fiender to get group parts
+     */
     private transient SegmentFinder hapiSegmentFinder;
 
-    public Group(ca.uhn.hl7v2.model.Group hapiGroup) {
+    /**
+     * Creates group class for passed hapi group
+     *
+     * @param hapiGroup Hapi group to wrap
+     */
+    public Group(final ca.uhn.hl7v2.model.Group hapiGroup) {
         this.hapiGroup = hapiGroup;
         this.hapiSegmentFinder = new SegmentFinder(hapiGroup);
     }
 
-    public List<Group> getGroups(String groupName) {
+    /**
+     * Return list of groups for given group name
+     *
+     * @param name Group name to search
+     * @return List of groups
+     */
+    public List<Group> getGroups(final String name) {
         try {
-            return Arrays.stream(hapiGroup.getAll(groupName))
-                    .map(e -> new Group((ca.uhn.hl7v2.model.Group) e))
-                    .collect(Collectors.toList());
+            return Arrays.stream(hapiGroup.getAll(name))
+                         .map(element -> new Group((ca.uhn.hl7v2.model.Group) element))
+                         .collect(Collectors.toList());
         } catch (HL7Exception e) {
             log.debug("No groups was found for given group name", e);
             return new ArrayList<>();
         }
     }
 
-    public Group getGroup(String groupName) {
-        return getGroup(groupName, DEFAULT_REPETITION_NUMBER);
+    /**
+     * Return single group with given name and default repetition number
+     *
+     * @param name Group name to search
+     * @return Group
+     */
+    public Group getGroup(final String name) {
+        return getGroup(name, DEFAULT_REPETITION_NUMBER);
     }
 
-    public Group getGroup(String groupName, int repetition) {
+    /**
+     * Return single group with given name and passed repetition number
+     *
+     * @param name       Group name to search
+     * @param repetition Repetition number
+     * @return Group
+     */
+    public Group getGroup(final String name, final int repetition) {
         try {
-            return new Group(hapiSegmentFinder.getGroup(groupName, repetition));
+            return new Group(hapiSegmentFinder.getGroup(name, repetition));
         } catch (HL7Exception e) {
             log.debug("Group with given name and repetition was not found", e);
             return null;
         }
     }
 
-    public List<Segment> getSegments(String segmentName) {
+    /**
+     * Return list of groups for given group name
+     *
+     * @param name Segment name to search
+     * @return Segment
+     */
+    public List<Segment> getSegments(final String name) {
         try {
-            return Arrays.stream(hapiGroup.getAll(segmentName))
-                    .map(e -> new Segment((ca.uhn.hl7v2.model.Segment) e))
-                    .collect(Collectors.toList());
+            return Arrays.stream(hapiGroup.getAll(name))
+                         .map(element -> new Segment((ca.uhn.hl7v2.model.Segment) element))
+                         .collect(Collectors.toList());
         } catch (HL7Exception e) {
             log.debug("No segments was found for given segment name", e);
             return new ArrayList<>();
         }
     }
 
-    public Segment addRepeatableSegment(String segmentName) {
-        return getSegment(segmentName, getSegments(segmentName).size());
+    /**
+     * Adds new repeatable segment with given name
+     *
+     * @param name Name of segment to add
+     * @return Added segment
+     */
+    public Segment addRepeatableSegment(final String name) {
+        return getSegment(name, getSegments(name).size());
     }
 
-    public Group addRepeatableGroup(String groupName) {
-        return getGroup(groupName, getGroups(groupName).size());
+    /**
+     * Adds new repeatable group with given name
+     *
+     * @param name Group name to add
+     * @return Added group
+     */
+    public Group addRepeatableGroup(final String name) {
+        return getGroup(name, getGroups(name).size());
     }
 
-    public Segment getConditionalSegment(String segmentName, int fieldNumber, int fieldRepetition, int componentToCheck, int subComponentToCheck, String valueToCheck) {
-        return getSegments(segmentName).stream()
-                .filter(segment -> segment.getField(fieldNumber, fieldRepetition).getValue(componentToCheck, subComponentToCheck).equals(valueToCheck))
-                .findFirst().orElse(null);
+    /**
+     * Helper method to get segment by value of one of it's field value
+     *
+     * @param name            Name of the segment to find
+     * @param field           Field number to check
+     * @param fieldRepetition Field repetition to check
+     * @param component       Field component to check
+     * @param subComponent    Field sub-component to check
+     * @param value           Field value to compare with
+     * @return Segment or null
+     */
+    public Segment getConditionalSegment(final String name, final int field, final int fieldRepetition, final int component, final int subComponent, final String value) {
+        return getSegments(name).stream()
+                                .filter(segment -> segment.getField(field, fieldRepetition).getValue(component, subComponent).equals(value))
+                                .findFirst().orElse(null);
     }
 
-    public Segment getConditionalSegment(String segmentName, int fieldNumber, int componentToCheck, int subComponentToCheck, String valueToCheck) {
-        return getConditionalSegment(segmentName, fieldNumber, DEFAULT_REPETITION_NUMBER, componentToCheck, subComponentToCheck, valueToCheck);
+    /**
+     * Helper method to get segment by value of one of it's field value. Field repetition is default
+     *
+     * @param name         Name of the segment to find
+     * @param field        Field number to check
+     * @param component    Field component to check
+     * @param subComponent Field sub-component to check
+     * @param value        Field value to compare with
+     * @return Segment or null
+     */
+    public Segment getConditionalSegment(final String name, final int field, final int component, final int subComponent, final String value) {
+        return getConditionalSegment(name, field, DEFAULT_REPETITION_NUMBER, component, subComponent, value);
     }
 
-    public Segment getConditionalSegment(String segmentName, int fieldNumber, int componentToCheck, String valueToCheck) {
-        return getConditionalSegment(segmentName, fieldNumber, DEFAULT_REPETITION_NUMBER, componentToCheck, DEFAULT_COMPONENT_SUB_COMPONENT_NUMBER, valueToCheck);
+    /**
+     * Helper method to get segment by value of one of it's field value. Field repetition and sub-component are default
+     *
+     * @param name      Name of the segment to find
+     * @param field     Field number to check
+     * @param component Field component to check
+     * @param value     Field value to compare with
+     * @return Segment or null
+     */
+    public Segment getConditionalSegment(final String name, final int field, final int component, final String value) {
+        return getConditionalSegment(name, field, DEFAULT_REPETITION_NUMBER, component, DEFAULT_COMPONENT_SUB_COMPONENT_NUMBER, value);
     }
 
-    public Segment getConditionalSegment(String segmentName, int fieldNumber, String valueToCheck) {
-        return getConditionalSegment(segmentName, fieldNumber, DEFAULT_REPETITION_NUMBER, DEFAULT_COMPONENT_SUB_COMPONENT_NUMBER, DEFAULT_COMPONENT_SUB_COMPONENT_NUMBER, valueToCheck);
+    /**
+     * Helper method to get segment by value of one of it's field value. Field repetition, component and sub-component
+     * are default
+     *
+     * @param name  Name of the segment to find
+     * @param field Field number to check
+     * @param value Field value to compare with
+     * @return Segment or null
+     */
+    public Segment getConditionalSegment(final String name, final int field, final String value) {
+        return getConditionalSegment(name, field, DEFAULT_REPETITION_NUMBER, DEFAULT_COMPONENT_SUB_COMPONENT_NUMBER, DEFAULT_COMPONENT_SUB_COMPONENT_NUMBER, value);
     }
 
-    public Segment getSegment(String segmentName) {
+    /**
+     * Returns segment with given name and default repetition number
+     *
+     * @param segmentName Segment name to get
+     * @return Segment
+     */
+    public Segment getSegment(final String segmentName) {
         return getSegment(segmentName, DEFAULT_REPETITION_NUMBER);
     }
 
-    public Segment getSegment(String segmentName, int repetition) {
+    /**
+     * Returns segment with given name and passed repetition number
+     *
+     * @param segmentName Segment name to get
+     * @param repetition  Required repetition number
+     * @return Segment
+     */
+
+    public Segment getSegment(final String segmentName, final int repetition) {
         try {
             return new Segment(hapiSegmentFinder.getSegment(segmentName, repetition));
         } catch (HL7Exception e) {
@@ -125,6 +234,7 @@ public class Group implements Serializable {
         }
     }
 
+    @SuppressWarnings("PMD.MethodArgumentCouldBeFinal")
     private void readObject(ObjectInputStream stream) throws ClassNotFoundException, IOException {
         stream.defaultReadObject();
         this.hapiSegmentFinder = new SegmentFinder(hapiGroup);

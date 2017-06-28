@@ -27,41 +27,94 @@ import ca.uhn.hl7v2.model.DataTypeException;
 import ca.uhn.hl7v2.model.Type;
 import ca.uhn.hl7v2.util.Terser;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 import java.io.Serializable;
 
 import static io.github.venis.hl7.model.Constants.DEFAULT_COMPONENT_SUB_COMPONENT_NUMBER;
 
-@RequiredArgsConstructor
+/**
+ * Class that represents single hl7 field (wraps hapi Type)
+ *
+ * @see Type
+ */
+@SuppressWarnings("PMD.AtLeastOneConstructor")
 public class Field implements Serializable {
     private static final long serialVersionUID = -6247885277540978188L;
-    @NonNull
-    private Type hapiType;
 
+    /**
+     * Hapi type to wrap
+     */
+    @NonNull
+    private final Type hapiType;
+
+    /**
+     * Constructor
+     *
+     * @param hapiType Hapi type to wrap
+     */
+    public Field(final Type hapiType) {
+        this.hapiType = hapiType;
+    }
+
+    /**
+     * Returns field value for default component and sub-component
+     *
+     * @return Field value
+     */
     public String getValue() {
         return getValue(DEFAULT_COMPONENT_SUB_COMPONENT_NUMBER, DEFAULT_COMPONENT_SUB_COMPONENT_NUMBER);
     }
 
-    public String getValue(int componentNumber) {
-        return getValue(componentNumber, DEFAULT_COMPONENT_SUB_COMPONENT_NUMBER);
+    /**
+     * Returns field value for passed component and default sub-component
+     *
+     * @param component Component number to get value for
+     * @return Field value
+     */
+    public String getValue(final int component) {
+        return getValue(component, DEFAULT_COMPONENT_SUB_COMPONENT_NUMBER);
     }
 
-    public String getValue(int componentNumber, int subComponentNumber) {
-        return Terser.getPrimitive(hapiType, componentNumber, subComponentNumber).getValue();
+    /**
+     * Returns field value for passed component and sub-component
+     *
+     * @param component    Component number to get value for
+     * @param subComponent Sub-component number to get value for
+     * @return Field value
+     */
+    public String getValue(final int component, final int subComponent) {
+        return Terser.getPrimitive(hapiType, component, subComponent).getValue();
     }
 
-    public void setValue(String newValue) {
+    /**
+     * Sets new field value for default component and sub-component
+     *
+     * @param newValue New field value
+     */
+    public void setValue(final String newValue) {
         setValue(DEFAULT_COMPONENT_SUB_COMPONENT_NUMBER, DEFAULT_COMPONENT_SUB_COMPONENT_NUMBER, newValue);
     }
 
-    public void setValue(int componentNumber, String newValue) {
-        setValue(componentNumber, DEFAULT_COMPONENT_SUB_COMPONENT_NUMBER, newValue);
+    /**
+     * Sets new field value passed component and default sub-component
+     *
+     * @param component Component number to set value for
+     * @param newValue  New field value
+     */
+    public void setValue(final int component, final String newValue) {
+        setValue(component, DEFAULT_COMPONENT_SUB_COMPONENT_NUMBER, newValue);
     }
 
-    public void setValue(int componentNumber, int subComponentNumber, String newValue) {
+    /**
+     * Sets new field value for passed component and sub-component
+     *
+     * @param component    Component number to set value for
+     * @param subComponent Sub-component number to set value for
+     * @param newValue     New field value
+     */
+    public void setValue(final int component, final int subComponent, final String newValue) {
         try {
-            Terser.getPrimitive(hapiType, componentNumber, subComponentNumber).setValue(newValue);
+            Terser.getPrimitive(hapiType, component, subComponent).setValue(newValue);
         } catch (DataTypeException e) {
             throw new IllegalArgumentException(e.getMessage(), e);
         }

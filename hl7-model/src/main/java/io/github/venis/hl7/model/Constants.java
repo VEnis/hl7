@@ -25,9 +25,24 @@ package io.github.venis.hl7.model;
 
 import lombok.experimental.UtilityClass;
 
+/**
+ * Class that contains some useful constants for other model classes
+ */
 @UtilityClass
+@SuppressWarnings({"PMD.AtLeastOneConstructor", "PMD.LongVariable"})
 public class Constants {
+    /**
+     * Default value for component or sub-component
+     */
     public static final int DEFAULT_COMPONENT_SUB_COMPONENT_NUMBER = 1;
+
+    /**
+     * Default value for repetition number
+     */
     public static final int DEFAULT_REPETITION_NUMBER = 0;
+
+    /**
+     * Default value for processing id
+     */
     public static final String DEFAULT_PROCESSING_ID = "P";
 }

@@ -36,48 +36,93 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 
+/**
+ * Class that represents hl7 message
+ */
 @ToString(exclude = {"terserMessage"}, callSuper = true)
 @Slf4j
 public class Message extends Group implements Serializable {
-    private static final int CREATE_MESSAGE_TYPE_EXPECTED_PARTS_COUNT = 2;
+    private static final int CREATE_MESSAGE_TYPE_EXPECTED_PARTS_COUNT = 2; //NOPMD
     private static final long serialVersionUID = -127057638264163059L;
     private transient Terser terserMessage;
 
-    public Message(ca.uhn.hl7v2.model.Message hapiMessage) {
+    /**
+     * Creates message object by hapi message
+     *
+     * @param hapiMessage Hapi message to wrap
+     */
+    public Message(final ca.uhn.hl7v2.model.Message hapiMessage) {
         super(hapiMessage);
         this.terserMessage = new Terser(hapiMessage);
     }
 
-    public Message(String type, Version version) {
+    /**
+     * Creates message by message type and version where version is hapi enum
+     *
+     * @param type    Message type (like "ADT_A01")
+     * @param version Message version
+     * @see Version
+     */
+    public Message(final String type, final Version version) {
         this(type, version.getVersion());
     }
 
-    public Message(String type, String version) {
+    /**
+     * Creates message by message type and version where version is string
+     *
+     * @param type    Message type like "ADT_A01"
+     * @param version Message version  like "2.3"
+     * @see Version
+     */
+    public Message(final String type, final String version) {
         this(type, version, Constants.DEFAULT_PROCESSING_ID);
     }
 
-    public Message(String type, Version version, String processingId) {
+    /**
+     * Creates message by message type, version where version is hapi enum and processing id
+     *
+     * @param type         Message type like "ADT_A01"
+     * @param version      Message version
+     * @param processingId Processing id like "P"
+     * @see Version
+     */
+    public Message(final String type, final Version version, final String processingId) {
         this(type, version.getVersion(), processingId);
     }
 
-    public Message(String type, String version, String processingId) {
+    /**
+     * Creates message by message type, version where version is string and processing id
+     *
+     * @param type         Message type like "ADT_A01"
+     * @param version      Message version like "2.3"
+     * @param processingId Processing id like "P"
+     */
+    public Message(final String type, final String version, final String processingId) {
         this(createMessage(type, version, processingId));
     }
 
-    private static ca.uhn.hl7v2.model.Message createMessage(String type, String version, String processingId) {
-        String[] messageTypeParts = type.split("_");
+    /**
+     * Actual method that creates hapi message object by given type, version and processing id
+     *
+     * @param type         Message type like "ADT_A01"
+     * @param version      Message version like "2.3"
+     * @param processingId Processing id like "P"
+     * @return Hapi message
+     */
+    private static ca.uhn.hl7v2.model.Message createMessage(final String type, final String version, final String processingId) {
+        final String[] messageTypeParts = type.split("_");
         if (messageTypeParts.length != CREATE_MESSAGE_TYPE_EXPECTED_PARTS_COUNT) {
             throw new IllegalArgumentException("Passed hl7 type is invalid: " + type);
         }
 
-        DefaultModelClassFactory defaultModelClassFactory = new DefaultModelClassFactory();
+        final DefaultModelClassFactory factory = new DefaultModelClassFactory();
 
         try {
-            Class<? extends ca.uhn.hl7v2.model.Message> messageClass = defaultModelClassFactory.getMessageClass(type, version, false);
-            ca.uhn.hl7v2.model.Message message = ReflectionUtil.instantiateMessage(messageClass, defaultModelClassFactory);
+            final Class<? extends ca.uhn.hl7v2.model.Message> messageClass = factory.getMessageClass(type, version, false);
+            final ca.uhn.hl7v2.model.Message message = ReflectionUtil.instantiateMessage(messageClass, factory);
 
-            String part1 = messageTypeParts[0];
-            String part2 = messageTypeParts[1];
+            final String part1 = messageTypeParts[0];
+            final String part2 = messageTypeParts[1];
 
             ((AbstractMessage) message).initQuickstart(part1, part2, processingId);
             return message;
@@ -86,27 +131,46 @@ public class Message extends Group implements Serializable {
         }
     }
 
-    public String getByTerser(String terserSpecification) {
+    /**
+     * Returns value for some field by terser specification
+     *
+     * @param terser Terser specification
+     * @return Value or null if nothing was found
+     */
+    @SuppressWarnings("PMD.OnlyOneReturn")
+    public String getByTerser(final String terser) {
         try {
-            return terserMessage.get(terserSpecification);
+            return terserMessage.get(terser);
         } catch (HL7Exception e) {
             log.debug("No result extracted by terser specification", e);
             return null;
         }
     }
 
-    public void setByTerser(String terserSpecification, String newValue) {
+    /**
+     * Sets new value for some field by terser specification
+     *
+     * @param terser Terser specification
+     * @param value  New value to be set
+     */
+    public void setByTerser(final String terser, final String value) {
         try {
-            terserMessage.set(terserSpecification, newValue);
+            terserMessage.set(terser, value);
         } catch (HL7Exception e) {
             throw new IllegalArgumentException(e.getMessage(), e);
         }
     }
 
+    /**
+     * Returns corresponded hapi message
+     *
+     * @return Hapi message
+     */
     public ca.uhn.hl7v2.model.Message getHapiMessage() {
         return (ca.uhn.hl7v2.model.Message) hapiGroup;
     }
 
+    @SuppressWarnings("PMD.MethodArgumentCouldBeFinal")
     private void readObject(ObjectInputStream stream) throws ClassNotFoundException, IOException {
         stream.defaultReadObject();
         this.terserMessage = new Terser((ca.uhn.hl7v2.model.Message) hapiGroup);

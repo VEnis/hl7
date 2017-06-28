@@ -25,7 +25,6 @@ package io.github.venis.hl7.model;
 
 import ca.uhn.hl7v2.HL7Exception;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serializable;
@@ -37,29 +36,64 @@ import java.util.stream.Collectors;
 import static io.github.venis.hl7.model.Constants.DEFAULT_COMPONENT_SUB_COMPONENT_NUMBER;
 import static io.github.venis.hl7.model.Constants.DEFAULT_REPETITION_NUMBER;
 
-@RequiredArgsConstructor
+/**
+ * Class that represents hl7 message segment
+ */
 @Slf4j
+@SuppressWarnings("PMD.OnlyOneReturn")
 public class Segment implements Serializable {
     private static final long serialVersionUID = 4225314827658228610L;
-    @NonNull
-    private ca.uhn.hl7v2.model.Segment hapiSegment;
 
-    public List<Field> getAllFields(int fieldNumber) {
+    /**
+     * Hapi segment to wrap
+     */
+    @NonNull
+    private final ca.uhn.hl7v2.model.Segment hapiSegment;
+
+    /**
+     * Creates new segment for passed hapi segment
+     *
+     * @param hapiSegment Hapi segment to wrap
+     */
+    public Segment(final ca.uhn.hl7v2.model.Segment hapiSegment) {
+        this.hapiSegment = hapiSegment;
+    }
+
+    /**
+     * Return all repeatable fields with given number
+     *
+     * @param fieldNumber Field number to return
+     * @return List of fields
+     */
+    public List<Field> getAllFields(final int fieldNumber) {
         try {
             return Arrays.stream(hapiSegment.getField(fieldNumber))
-                    .map(Field::new)
-                    .collect(Collectors.toList());
+                         .map(Field::new)
+                         .collect(Collectors.toList());
         } catch (HL7Exception e) {
             log.debug("No fields was found for given field number", e);
             return new ArrayList<>();
         }
     }
 
-    public Field getField(int fieldNumber) {
+    /**
+     * Returns field by it's number
+     *
+     * @param fieldNumber Field to return
+     * @return Field
+     */
+    public Field getField(final int fieldNumber) {
         return getField(fieldNumber, DEFAULT_REPETITION_NUMBER);
     }
 
-    public Field getField(int fieldNumber, int repetition) {
+    /**
+     * Returns field by it's number and repetition number
+     *
+     * @param fieldNumber Field number
+     * @param repetition  Repetition number
+     * @return Field
+     */
+    public Field getField(final int fieldNumber, final int repetition) {
         try {
             return new Field(hapiSegment.getField(fieldNumber, repetition));
         } catch (HL7Exception e) {
@@ -68,15 +102,32 @@ public class Segment implements Serializable {
         }
     }
 
-    public Field getConditionalField(int fieldNumber, int componentToCheck, int subComponentToCheck, String
-            valueToCheck) {
+    /**
+     * Returns field from list of the repeatable fields which component and sub-component value equals to the given one
+     *
+     * @param fieldNumber  Field number to check
+     * @param component    Component to check
+     * @param subComponent Sub-component to check
+     * @param value        Value to compare
+     * @return Field
+     */
+    public Field getConditionalField(final int fieldNumber, final int component, final int subComponent, final String value) {
         return getAllFields(fieldNumber).stream()
-                .filter(field -> field.getValue(componentToCheck, subComponentToCheck) != null)
-                .filter(field -> field.getValue(componentToCheck, subComponentToCheck).equals(valueToCheck))
-                .findFirst().orElse(null);
+                                        .filter(field -> field.getValue(component, subComponent) != null)
+                                        .filter(field -> field.getValue(component, subComponent).equals(value))
+                                        .findFirst().orElse(null);
     }
 
-    public Field getConditionalField(int fieldNumber, int componentToCheck, String valueToCheck) {
-        return getConditionalField(fieldNumber, componentToCheck, DEFAULT_COMPONENT_SUB_COMPONENT_NUMBER, valueToCheck);
+    /**
+     * Returns field from list of the repeatable fields which component default sub-component value equals to the given
+     * one
+     *
+     * @param fieldNumber Field number to check
+     * @param component   Component to check
+     * @param value       Value to compare
+     * @return Field
+     */
+    public Field getConditionalField(final int fieldNumber, final int component, final String value) {
+        return getConditionalField(fieldNumber, component, DEFAULT_COMPONENT_SUB_COMPONENT_NUMBER, value);
     }
 }
