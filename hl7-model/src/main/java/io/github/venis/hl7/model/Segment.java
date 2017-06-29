@@ -25,6 +25,7 @@ package io.github.venis.hl7.model;
 
 import ca.uhn.hl7v2.HL7Exception;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serializable;
@@ -40,6 +41,7 @@ import static io.github.venis.hl7.model.Constants.DEFAULT_REPETITION_NUMBER;
  * Class that represents hl7 message segment
  */
 @Slf4j
+@RequiredArgsConstructor
 @SuppressWarnings("PMD.OnlyOneReturn")
 public class Segment implements Serializable {
     private static final long serialVersionUID = 4225314827658228610L;
@@ -49,15 +51,6 @@ public class Segment implements Serializable {
      */
     @NonNull
     private final ca.uhn.hl7v2.model.Segment hapiSegment;
-
-    /**
-     * Creates new segment for passed hapi segment
-     *
-     * @param hapiSegment Hapi segment to wrap
-     */
-    public Segment(final ca.uhn.hl7v2.model.Segment hapiSegment) {
-        this.hapiSegment = hapiSegment;
-    }
 
     /**
      * Return all repeatable fields with given number

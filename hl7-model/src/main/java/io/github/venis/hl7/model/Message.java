@@ -34,14 +34,13 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.Serializable;
 
 /**
  * Class that represents hl7 message
  */
 @ToString(exclude = {"terserMessage"}, callSuper = true)
 @Slf4j
-public class Message extends Group implements Serializable {
+public class Message extends Group {
     private static final int CREATE_MESSAGE_TYPE_EXPECTED_PARTS_COUNT = 2; //NOPMD
     private static final long serialVersionUID = -127057638264163059L;
     private transient Terser terserMessage;

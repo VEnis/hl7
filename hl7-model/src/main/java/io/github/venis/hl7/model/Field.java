@@ -27,6 +27,7 @@ import ca.uhn.hl7v2.model.DataTypeException;
 import ca.uhn.hl7v2.model.Type;
 import ca.uhn.hl7v2.util.Terser;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 import java.io.Serializable;
 
@@ -37,6 +38,7 @@ import static io.github.venis.hl7.model.Constants.DEFAULT_COMPONENT_SUB_COMPONEN
  *
  * @see Type
  */
+@RequiredArgsConstructor
 @SuppressWarnings("PMD.AtLeastOneConstructor")
 public class Field implements Serializable {
     private static final long serialVersionUID = -6247885277540978188L;
@@ -46,15 +48,6 @@ public class Field implements Serializable {
      */
     @NonNull
     private final Type hapiType;
-
-    /**
-     * Constructor
-     *
-     * @param hapiType Hapi type to wrap
-     */
-    public Field(final Type hapiType) {
-        this.hapiType = hapiType;
-    }
 
     /**
      * Returns field value for default component and sub-component
